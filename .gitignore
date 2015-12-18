@@ -1,2 +1,5 @@
-lib
+.babelrc
+.eslintrc
 node_modules
+src
+test
