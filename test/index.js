@@ -1,8 +1,7 @@
+import Color from '../src/index';
 import chai from 'chai';
 
 const expect = chai.expect;
-
-import Color from '../src/index';
 
 describe('Color', () => {
   it('is expected to throw error when called without new', () => {
@@ -23,7 +22,7 @@ describe('color', () => {
       'rgb', 'rgba', 'hsl', 'hsla', 'hex'
     ];
     props.forEach(prop => {
-      it('is expected to have ' + prop + ' as getter/setter', () => {
+      it(`is expected to have ${prop} as getter/setter`, () => {
         const proto = Object.getPrototypeOf(color);
         const d = Object.getOwnPropertyDescriptor(proto, prop);
         expect(d.get).to.be.a('function');

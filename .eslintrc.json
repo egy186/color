@@ -1,0 +1,6 @@
+{
+  "extends": "egy186",
+  "parserOptions": {
+    "sourceType": "module"
+  }
+}

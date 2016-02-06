@@ -1,11 +1,8 @@
-/* eslint no-invalid-this: 0 */
-
-import hsl2rgb from './hsl2rgb';
-import rgb2hsl from './rgb2hsl';
-// import polyfill
 import 'core-js/fn/number/is-finite';
 import 'core-js/fn/reflect/apply';
 import 'core-js/fn/string/includes';
+import hsl2rgb from './hsl2rgb';
+import rgb2hsl from './rgb2hsl';
 
 const round = Math.round;
 
@@ -16,7 +13,7 @@ const PrivateProperties = () => {
   return self => wm.get(self) || (wm.set(self, Object.create(null)), wm.get(self));
 };
 
-const toHex = n => ('0' + n.toString(16)).slice(-2);
+const toHex = n => `0${n.toString(16)}`.slice(-2);
 
 const Color = (() => {
   const privateProperties = new PrivateProperties();
@@ -35,8 +32,8 @@ const Color = (() => {
     }
   };
 
-  const setNumber = function (key, value) {
-    value = parseFloat(value);
+  const setNumber = function (key, num) {
+    const value = parseFloat(num);
     if (Number.isFinite(value)) {
       privateProperties(this)[key] = value;
       if ('rgb'.includes(key)) {
@@ -48,16 +45,16 @@ const Color = (() => {
     return value;
   };
 
-  const setHex = function (key, value) {
-    value = String(value);
+  const setHex = function (key, hex) {
+    let value = String(hex);
     if (value.length === 1) {
-      value += value;
+      value = value.repeat(2);
     }
     return Reflect.apply(setNumber, this, [key, parseInt(value, 16)]);
   };
 
-  const setString = function (key, value) {
-    value = value.replace(/[rgbhsla();\s]/g, '').split(',').map(parseFloat);
+  const setString = function (key, str) {
+    const value = str.replace(/[rgbhsla();\s]/g, '').split(',').map(parseFloat);
     const pp = privateProperties(this);
     for (let i = 0; i < Math.min(key.length, value.length); i++) {
       if (Number.isFinite(value[i])) {
@@ -179,19 +176,19 @@ const Color = (() => {
     }
 
     get hex () {
-      return '#' + this.r16 + this.g16 + this.b16;
+      return `#${this.r16}${this.g16}${this.b16}`;
     }
     set hex (s) {
-      s = s.replace('#', '');
+      let hex = s.replace('#', '');
       let length = 2;
-      if (s.length === 3) {
+      if (hex.length === 3) {
         length = 1;
-      } else if (s.length !== 6) {
-        s = (s + '000000').substr(0, 6);
+      } else if (hex.length !== 6) {
+        hex = `${hex}000000`.substr(0, 6);
       }
-      Reflect.apply(setHex, this, ['r', s.substr(0, length)]);
-      Reflect.apply(setHex, this, ['g', s.substr(length, length)]);
-      Reflect.apply(setHex, this, ['b', s.substr(length * 2, length)]);
+      Reflect.apply(setHex, this, ['r', hex.substr(0, length)]);
+      Reflect.apply(setHex, this, ['g', hex.substr(length, length)]);
+      Reflect.apply(setHex, this, ['b', hex.substr(length * 2, length)]);
     }
 
     toObject () {

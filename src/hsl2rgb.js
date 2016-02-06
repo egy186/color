@@ -8,9 +8,9 @@ const hsl2rgb = hsl => {
   }
   s /= 100;
   l /= 100;
-  const c = s * (1 - Math.abs(2 * l - 1)),
-        x = c * (1 - Math.abs(h / 60 % 2 - 1)),
-        m = l - c / 2;
+  const c = s * (1 - Math.abs(2 * l - 1));
+  const x = c * (1 - Math.abs(h / 60 % 2 - 1));
+  const m = l - c / 2;
   let [r, g, b] = [l, l, l];
   if (s !== 0) {
     if (h < 60) {

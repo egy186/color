@@ -1,12 +1,12 @@
-const rgb2hsl = rgb => {
-  rgb = rgb.map(n => n / 255);
-  const max = Math.max(...rgb),
-        min = Math.min(...rgb),
-        sum = max + min,
-        delta = max - min,
-        [r, g, b] = rgb;
-  let h = 0,
-      s = 0;
+const rgb2hsl = rgb255 => {
+  const rgb = rgb255.map(n => n / 255);
+  const max = Math.max(...rgb);
+  const min = Math.min(...rgb);
+  const sum = max + min;
+  const delta = max - min;
+  const [r, g, b] = rgb;
+  let h = 0;
+  let s = 0;
   const l = sum * 50;
   if (delta !== 0) {
     switch (max) { // eslint-disable-line default-case
