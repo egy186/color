@@ -4,6 +4,8 @@ import 'core-js/fn/string/includes';
 import hsl2rgb from './hsl2rgb';
 import rgb2hsl from './rgb2hsl';
 
+/* eslint no-invalid-this: 0 */
+
 const round = Math.round;
 
 const PrivateProperties = () => {
@@ -18,7 +20,7 @@ const toHex = n => `0${n.toString(16)}`.slice(-2);
 const Color = (() => {
   const privateProperties = new PrivateProperties();
 
-  const sync = function (changedColorScheme) {
+  const sync = function sync (changedColorScheme) {
     const pp = privateProperties(this);
     switch (changedColorScheme) {
       case 'rgb':
@@ -32,7 +34,7 @@ const Color = (() => {
     }
   };
 
-  const setNumber = function (key, num) {
+  const setNumber = function setNumber (key, num) {
     const value = parseFloat(num);
     if (Number.isFinite(value)) {
       privateProperties(this)[key] = value;
@@ -45,7 +47,7 @@ const Color = (() => {
     return value;
   };
 
-  const setHex = function (key, hex) {
+  const setHex = function setHex (key, hex) {
     let value = String(hex);
     if (value.length === 1) {
       value = value.repeat(2);
@@ -53,7 +55,7 @@ const Color = (() => {
     return Reflect.apply(setNumber, this, [key, parseInt(value, 16)]);
   };
 
-  const setString = function (key, str) {
+  const setString = function setString (key, str) {
     const value = str.replace(/[rgbhsla();\s]/g, '').split(',').map(parseFloat);
     const pp = privateProperties(this);
     for (let i = 0; i < Math.min(key.length, value.length); i++) {

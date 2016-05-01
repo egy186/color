@@ -10,12 +10,6 @@ describe('Color', () => {
 });
 
 describe('color', () => {
-  let color;
-
-  beforeEach(() => {
-    color = new Color();
-  });
-
   describe('prototype', () => {
     const props = [
       'r', 'g', 'b', 'r16', 'g16', 'b16', 'h', 's', 'l', 'a',
@@ -23,27 +17,31 @@ describe('color', () => {
     ];
     props.forEach(prop => {
       it(`is expected to have ${prop} as getter/setter`, () => {
-        const proto = Object.getPrototypeOf(color);
-        const d = Object.getOwnPropertyDescriptor(proto, prop);
+        const color = new Color();
+        const proto = Reflect.getPrototypeOf(color);
+        const d = Reflect.getOwnPropertyDescriptor(proto, prop);
         expect(d.get).to.be.a('function');
         expect(d.set).to.be.a('function');
       });
     });
 
     it('is expected to have toObject method', () => {
-      const proto = Object.getPrototypeOf(color);
-      const d = Object.getOwnPropertyDescriptor(proto, 'toObject');
+      const color = new Color();
+      const proto = Reflect.getPrototypeOf(color);
+      const d = Reflect.getOwnPropertyDescriptor(proto, 'toObject');
       expect(d.value).to.be.a('function');
     });
 
     it('is expected to have toString method', () => {
-      const proto = Object.getPrototypeOf(color);
-      const d = Object.getOwnPropertyDescriptor(proto, 'toString');
+      const color = new Color();
+      const proto = Reflect.getPrototypeOf(color);
+      const d = Reflect.getOwnPropertyDescriptor(proto, 'toString');
       expect(d.value).to.be.a('function');
     });
   });
 
   it('is expected to be initialized to rgba(0, 0, 0, 1)', () => {
+    const color = new Color();
     const expected = {
       r: 0, g: 0, b: 0,
       h: 0, s: 0, l: 0,
@@ -55,6 +53,7 @@ describe('color', () => {
 
   describe('r', () => {
     it('is expected to set new value and update other values', () => {
+      const color = new Color();
       color.r = 127;
       expect(color.r).to.deep.equal(127);
       expect(color.toObject()).to.deep.equal({
@@ -66,6 +65,7 @@ describe('color', () => {
   });
 
   describe('g', () => {
+    const color = new Color();
     it('is expected to set new value and update other values', () => {
       color.g = 127;
       expect(color.g).to.deep.equal(127);
@@ -79,6 +79,7 @@ describe('color', () => {
 
   describe('b', () => {
     it('is expected to set new value and update other values', () => {
+      const color = new Color();
       color.b = 127;
       expect(color.b).to.deep.equal(127);
       expect(color.toObject()).to.deep.equal({
@@ -91,6 +92,7 @@ describe('color', () => {
 
   describe('r16', () => {
     it('is expected to set new value and update other values', () => {
+      const color = new Color();
       color.r16 = '7f';
       expect(color.r16).to.deep.equal('7f');
       expect(color.toObject()).to.deep.equal({
@@ -110,6 +112,7 @@ describe('color', () => {
 
   describe('g16', () => {
     it('is expected to set new value and update other values', () => {
+      const color = new Color();
       color.g16 = '7f';
       expect(color.g16).to.deep.equal('7f');
       expect(color.toObject()).to.deep.equal({
@@ -129,6 +132,7 @@ describe('color', () => {
 
   describe('b16', () => {
     it('is expected to set new value and update other values', () => {
+      const color = new Color();
       color.b16 = '7f';
       expect(color.b16).to.deep.equal('7f');
       expect(color.toObject()).to.deep.equal({
@@ -148,6 +152,7 @@ describe('color', () => {
 
   describe('h', () => {
     it('is expected to set new value and update other values', () => {
+      const color = new Color();
       color.h = 180;
       color.s = 100;
       color.l = 50;
@@ -162,6 +167,7 @@ describe('color', () => {
 
   describe('s', () => {
     it('is expected to set new value and update other values', () => {
+      const color = new Color();
       color.s = 50;
       color.l = 50;
       expect(color.s).to.deep.equal(50);
@@ -175,6 +181,7 @@ describe('color', () => {
 
   describe('l', () => {
     it('is expected to set new value and update other values', () => {
+      const color = new Color();
       color.l = 50;
       expect(color.l).to.deep.equal(50);
       expect(color.toObject()).to.deep.equal({
@@ -187,6 +194,7 @@ describe('color', () => {
 
   describe('a', () => {
     it('is expected to set new value', () => {
+      const color = new Color();
       color.a = 0.5;
       expect(color.a).to.deep.equal(0.5);
       expect(color.toObject()).to.deep.equal({
@@ -199,6 +207,7 @@ describe('color', () => {
 
   describe('rgb', () => {
     it('is expected to set new value and update other values', () => {
+      const color = new Color();
       color.rgb = 'rgb(255,127,0)';
       expect(color.rgb).to.deep.equal('rgb(255, 127, 0)');
       expect(color.toObject()).to.deep.equal({
@@ -211,6 +220,7 @@ describe('color', () => {
 
   describe('rgba', () => {
     it('is expected to set new value and update other values', () => {
+      const color = new Color();
       color.rgba = 'rgba(0,127,255,.5);';
       expect(color.rgba).to.deep.equal('rgba(0, 127, 255, 0.5)');
       expect(color.toObject()).to.deep.equal({
@@ -223,6 +233,7 @@ describe('color', () => {
 
   describe('hsl', () => {
     it('is expected to set new value and update other values', () => {
+      const color = new Color();
       color.hsl = 'hsl(120,100%,50%';
       expect(color.hsl).to.deep.equal('hsl(120, 100%, 50%)');
       expect(color.toObject()).to.deep.equal({
@@ -235,6 +246,7 @@ describe('color', () => {
 
   describe('hsla', () => {
     it('is expected to set new value and update other values', () => {
+      const color = new Color();
       color.hsla = '240,50,50,.5);';
       expect(color.hsla).to.deep.equal('hsla(240, 50%, 50%, 0.5)');
       expect(color.toObject()).to.deep.equal({
@@ -247,6 +259,7 @@ describe('color', () => {
 
   describe('hex', () => {
     it('is expected to set new value and update other values', () => {
+      const color = new Color();
       color.hex = '#00ff7f';
       expect(color.hex).to.deep.equal('#00ff7f');
       expect(color.toObject()).to.deep.equal({

@@ -9,7 +9,7 @@ const rgb2hsl = rgb255 => {
   let s = 0;
   const l = sum * 50;
   if (delta !== 0) {
-    switch (max) { // eslint-disable-line default-case
+    switch (max) {
       case r:
         h = 60 * (g - b) / delta;
         break;
@@ -19,6 +19,7 @@ const rgb2hsl = rgb255 => {
       case b:
         h = 240 + 60 * (r - g) / delta;
         break;
+      // no default
     }
     if (h < 0) {
       h += 360;
