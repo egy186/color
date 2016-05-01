@@ -18,8 +18,8 @@ describe('color', () => {
     props.forEach(prop => {
       it(`is expected to have ${prop} as getter/setter`, () => {
         const color = new Color();
-        const proto = Reflect.getPrototypeOf(color);
-        const d = Reflect.getOwnPropertyDescriptor(proto, prop);
+        const proto = Object.getPrototypeOf(color);
+        const d = Object.getOwnPropertyDescriptor(proto, prop);
         expect(d.get).to.be.a('function');
         expect(d.set).to.be.a('function');
       });
@@ -27,15 +27,15 @@ describe('color', () => {
 
     it('is expected to have toObject method', () => {
       const color = new Color();
-      const proto = Reflect.getPrototypeOf(color);
-      const d = Reflect.getOwnPropertyDescriptor(proto, 'toObject');
+      const proto = Object.getPrototypeOf(color);
+      const d = Object.getOwnPropertyDescriptor(proto, 'toObject');
       expect(d.value).to.be.a('function');
     });
 
     it('is expected to have toString method', () => {
       const color = new Color();
-      const proto = Reflect.getPrototypeOf(color);
-      const d = Reflect.getOwnPropertyDescriptor(proto, 'toString');
+      const proto = Object.getPrototypeOf(color);
+      const d = Object.getOwnPropertyDescriptor(proto, 'toString');
       expect(d.value).to.be.a('function');
     });
   });
