@@ -1,10 +1,10 @@
+import 'core-js/fn/array/includes';
 import 'core-js/fn/number/is-finite';
-import 'core-js/fn/reflect/apply';
-import 'core-js/fn/string/includes';
+import 'core-js/fn/reflect/set';
+import 'core-js/fn/string/pad-start';
+import 'core-js/fn/string/repeat';
 import hsl2rgb from './hsl2rgb';
 import rgb2hsl from './rgb2hsl';
-
-/* eslint no-invalid-this: 0 */
 
 const round = Math.round;
 
@@ -15,56 +15,31 @@ const PrivateProperties = () => {
   return self => wm.get(self) || (wm.set(self, Object.create(null)), wm.get(self));
 };
 
-const toHex = n => `0${n.toString(16)}`.slice(-2);
+const numberToHex = n => n.toString(16).padStart(2, '0');
+const hexToNumber = s => parseInt(s.length === 1 ? s.repeat(2) : s, 16);
 
 const Color = (() => {
   const privateProperties = new PrivateProperties();
 
-  const sync = function sync (changedColorScheme) {
-    const pp = privateProperties(this);
-    switch (changedColorScheme) {
-      case 'rgb':
-        [pp.h, pp.s, pp.l] = rgb2hsl([this.r, this.g, this.b]);
-        return true;
-      case 'hsl':
-        [pp.r, pp.g, pp.b] = hsl2rgb([this.h, this.s, this.l]);
-        return true;
-      default:
-        return false;
-    }
-  };
-
-  const setNumber = function setNumber (key, num) {
-    const value = parseFloat(num);
-    if (Number.isFinite(value)) {
-      privateProperties(this)[key] = value;
-      if ('rgb'.includes(key)) {
-        Reflect.apply(sync, this, ['rgb']);
-      } else if ('hsl'.includes(key)) {
-        Reflect.apply(sync, this, ['hsl']);
+  const isRGB = key => ['r', 'g', 'b'].includes(key);
+  const isHSL = key => ['h', 's', 'l'].includes(key);
+  const setNumber = (target, property, value) => {
+    const num = parseFloat(value);
+    if ((isRGB(property) || isHSL(property) || property === 'a') && Number.isFinite(num)) {
+      const result = Reflect.set(target, property, num);
+      if (isRGB(property)) {
+        [target.h, target.s, target.l] = rgb2hsl([target.r, target.g, target.b]);
+      } else if (isHSL(property)) {
+        [target.r, target.g, target.b] = hsl2rgb([target.h, target.s, target.l]);
       }
+      return result;
     }
-    return value;
+    return false;
   };
 
-  const setHex = function setHex (key, hex) {
-    let value = String(hex);
-    if (value.length === 1) {
-      value = value.repeat(2);
-    }
-    return Reflect.apply(setNumber, this, [key, parseInt(value, 16)]);
-  };
-
-  const setString = function setString (key, str) {
-    const value = str.replace(/[rgbhsla();\s]/g, '').split(',').map(parseFloat);
-    const pp = privateProperties(this);
-    for (let i = 0; i < Math.min(key.length, value.length); i++) {
-      if (Number.isFinite(value[i])) {
-        pp[key[i]] = value[i];
-      }
-    }
-    Reflect.apply(sync, this, [key.substr(0, 3)]);
-    return value;
+  const setString = (target, property, value) => {
+    const values = value.replace(/[rgbhsla(%);\s]/g, '').split(',').map(parseFloat);
+    return property.split('').slice(0, values.length).every((key, i) => Reflect.set(target, key, values[i]));
   };
 
   return class {
@@ -83,114 +58,112 @@ const Color = (() => {
       return privateProperties(this).r;
     }
     set r (n) {
-      return Reflect.apply(setNumber, this, ['r', n]);
+      return setNumber(privateProperties(this), 'r', n);
     }
 
     get g () {
       return privateProperties(this).g;
     }
     set g (n) {
-      return Reflect.apply(setNumber, this, ['g', n]);
+      return setNumber(privateProperties(this), 'g', n);
     }
 
     get b () {
       return privateProperties(this).b;
     }
     set b (n) {
-      return Reflect.apply(setNumber, this, ['b', n]);
+      return setNumber(privateProperties(this), 'b', n);
     }
 
     get r16 () {
-      return toHex(this.r);
+      return numberToHex(this.r);
     }
     set r16 (s) {
-      return Reflect.apply(setHex, this, ['r', s]);
+      return Reflect.set(this, 'r', hexToNumber(s));
     }
 
     get g16 () {
-      return toHex(this.g);
+      return numberToHex(this.g);
     }
     set g16 (s) {
-      return Reflect.apply(setHex, this, ['g', s]);
+      return Reflect.set(this, 'g', hexToNumber(s));
     }
 
     get b16 () {
-      return toHex(this.b);
+      return numberToHex(this.b);
     }
     set b16 (s) {
-      return Reflect.apply(setHex, this, ['b', s]);
+      return Reflect.set(this, 'b', hexToNumber(s));
     }
 
     get h () {
       return privateProperties(this).h;
     }
     set h (n) {
-      return Reflect.apply(setNumber, this, ['h', n]);
+      return setNumber(privateProperties(this), 'h', n);
     }
 
     get s () {
       return privateProperties(this).s;
     }
     set s (n) {
-      return Reflect.apply(setNumber, this, ['s', n]);
+      return setNumber(privateProperties(this), 's', n);
     }
 
     get l () {
       return privateProperties(this).l;
     }
     set l (n) {
-      return Reflect.apply(setNumber, this, ['l', n]);
+      return setNumber(privateProperties(this), 'l', n);
     }
 
     get a () {
       return privateProperties(this).a;
     }
     set a (n) {
-      return Reflect.apply(setNumber, this, ['a', n]);
+      return setNumber(privateProperties(this), 'a', n);
     }
 
     get rgb () {
       return `rgb(${round(this.r)}, ${round(this.g)}, ${round(this.b)})`;
     }
     set rgb (s) {
-      return Reflect.apply(setString, this, ['rgb', s]);
+      return setString(this, 'rgb', s);
     }
 
     get rgba () {
       return `rgba(${round(this.r)}, ${round(this.g)}, ${round(this.b)}, ${this.a})`;
     }
     set rgba (s) {
-      return Reflect.apply(setString, this, ['rgba', s]);
+      return setString(this, 'rgba', s);
     }
 
     get hsl () {
       return `hsl(${round(this.h)}, ${round(this.s)}%, ${round(this.l)}%)`;
     }
     set hsl (s) {
-      return Reflect.apply(setString, this, ['hsl', s]);
+      return setString(this, 'hsl', s);
     }
 
     get hsla () {
       return `hsla(${round(this.h)}, ${round(this.s)}%, ${round(this.l)}%, ${this.a})`;
     }
     set hsla (s) {
-      return Reflect.apply(setString, this, ['hsla', s]);
+      return setString(this, 'hsla', s);
     }
 
     get hex () {
-      return `#${this.r16}${this.g16}${this.b16}`;
+      return `#${numberToHex(this.r)}${numberToHex(this.g)}${numberToHex(this.b)}`;
     }
     set hex (s) {
       let hex = s.replace('#', '');
-      let length = 2;
       if (hex.length === 3) {
-        length = 1;
-      } else if (hex.length !== 6) {
-        hex = `${hex}000000`.substr(0, 6);
+        hex = hex.split('').map(str => str.repeat(2)).join('');
+      } else if (hex.length % 2 !== 0) {
+        hex += '0';
       }
-      Reflect.apply(setHex, this, ['r', hex.substr(0, length)]);
-      Reflect.apply(setHex, this, ['g', hex.substr(length, length)]);
-      Reflect.apply(setHex, this, ['b', hex.substr(length * 2, length)]);
+      hex = hex.match(/.{2}/g);
+      return ['r16', 'g16', 'b16'].slice(0, hex.length).every((key, i) => Reflect.set(this, key, hex[i]));
     }
 
     toObject () {
