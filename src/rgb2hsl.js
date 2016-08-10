@@ -14,10 +14,10 @@ const rgb2hsl = rgb255 => {
         h = 60 * (g - b) / delta;
         break;
       case g:
-        h = 120 + 60 * (b - r) / delta;
+        h = 120 + (60 * (b - r) / delta);
         break;
       case b:
-        h = 240 + 60 * (r - g) / delta;
+        h = 240 + (60 * (r - g) / delta);
         break;
       // no default
     }
