@@ -1,6 +1,15 @@
 import Color from '../src/index';
 import chai from 'chai';
 
+const colorObject = (r, g, b, h, s, l, a) => ({
+  r,
+  g,
+  b,
+  h,
+  s,
+  l,
+  a
+});
 const expect = chai.expect;
 
 describe('Color', () => {
@@ -42,11 +51,7 @@ describe('color', () => {
 
   it('is expected to be initialized to rgba(0, 0, 0, 1)', () => {
     const color = new Color();
-    const expected = {
-      r: 0, g: 0, b: 0,
-      h: 0, s: 0, l: 0,
-      a: 1
-    };
+    const expected = colorObject(0, 0, 0, 0, 0, 0, 1);
     expect(color.toObject()).to.deep.equal(expected);
     expect(JSON.parse(color.toString())).to.deep.equal(expected);
   });
@@ -56,24 +61,16 @@ describe('color', () => {
       const color = new Color();
       color.r = 127;
       expect(color.r).to.deep.equal(127);
-      expect(color.toObject()).to.deep.equal({
-        r: 127, g: 0, b: 0,
-        h: 0, s: 100, l: 25,
-        a: 1
-      });
+      expect(color.toObject()).to.deep.equal(colorObject(127, 0, 0, 0, 100, 25, 1));
     });
   });
 
   describe('g', () => {
-    const color = new Color();
     it('is expected to set new value and update other values', () => {
+      const color = new Color();
       color.g = 127;
       expect(color.g).to.deep.equal(127);
-      expect(color.toObject()).to.deep.equal({
-        r: 0, g: 127, b: 0,
-        h: 120, s: 100, l: 25,
-        a: 1
-      });
+      expect(color.toObject()).to.deep.equal(colorObject(0, 127, 0, 120, 100, 25, 1));
     });
   });
 
@@ -82,11 +79,7 @@ describe('color', () => {
       const color = new Color();
       color.b = 127;
       expect(color.b).to.deep.equal(127);
-      expect(color.toObject()).to.deep.equal({
-        r: 0, g: 0, b: 127,
-        h: 240, s: 100, l: 25,
-        a: 1
-      });
+      expect(color.toObject()).to.deep.equal(colorObject(0, 0, 127, 240, 100, 25, 1));
     });
   });
 
@@ -95,18 +88,10 @@ describe('color', () => {
       const color = new Color();
       color.r16 = '7f';
       expect(color.r16).to.deep.equal('7f');
-      expect(color.toObject()).to.deep.equal({
-        r: 127, g: 0, b: 0,
-        h: 0, s: 100, l: 25,
-        a: 1
-      });
+      expect(color.toObject()).to.deep.equal(colorObject(127, 0, 0, 0, 100, 25, 1));
       color.r16 = 'f';
       expect(color.r16).to.deep.equal('ff');
-      expect(color.toObject()).to.deep.equal({
-        r: 255, g: 0, b: 0,
-        h: 0, s: 100, l: 50,
-        a: 1
-      });
+      expect(color.toObject()).to.deep.equal(colorObject(255, 0, 0, 0, 100, 50, 1));
     });
   });
 
@@ -115,18 +100,10 @@ describe('color', () => {
       const color = new Color();
       color.g16 = '7f';
       expect(color.g16).to.deep.equal('7f');
-      expect(color.toObject()).to.deep.equal({
-        r: 0, g: 127, b: 0,
-        h: 120, s: 100, l: 25,
-        a: 1
-      });
+      expect(color.toObject()).to.deep.equal(colorObject(0, 127, 0, 120, 100, 25, 1));
       color.g16 = 'f';
       expect(color.g16).to.deep.equal('ff');
-      expect(color.toObject()).to.deep.equal({
-        r: 0, g: 255, b: 0,
-        h: 120, s: 100, l: 50,
-        a: 1
-      });
+      expect(color.toObject()).to.deep.equal(colorObject(0, 255, 0, 120, 100, 50, 1));
     });
   });
 
@@ -135,18 +112,10 @@ describe('color', () => {
       const color = new Color();
       color.b16 = '7f';
       expect(color.b16).to.deep.equal('7f');
-      expect(color.toObject()).to.deep.equal({
-        r: 0, g: 0, b: 127,
-        h: 240, s: 100, l: 25,
-        a: 1
-      });
+      expect(color.toObject()).to.deep.equal(colorObject(0, 0, 127, 240, 100, 25, 1));
       color.b16 = 'f';
       expect(color.b16).to.deep.equal('ff');
-      expect(color.toObject()).to.deep.equal({
-        r: 0, g: 0, b: 255,
-        h: 240, s: 100, l: 50,
-        a: 1
-      });
+      expect(color.toObject()).to.deep.equal(colorObject(0, 0, 255, 240, 100, 50, 1));
     });
   });
 
@@ -157,11 +126,7 @@ describe('color', () => {
       color.s = 100;
       color.l = 50;
       expect(color.h).to.deep.equal(180);
-      expect(color.toObject()).to.deep.equal({
-        r: 0, g: 255, b: 255,
-        h: 180, s: 100, l: 50,
-        a: 1
-      });
+      expect(color.toObject()).to.deep.equal(colorObject(0, 255, 255, 180, 100, 50, 1));
     });
   });
 
@@ -171,11 +136,7 @@ describe('color', () => {
       color.s = 50;
       color.l = 50;
       expect(color.s).to.deep.equal(50);
-      expect(color.toObject()).to.deep.equal({
-        r: 191, g: 64, b: 64,
-        h: 0, s: 50, l: 50,
-        a: 1
-      });
+      expect(color.toObject()).to.deep.equal(colorObject(191, 64, 64, 0, 50, 50, 1));
     });
   });
 
@@ -184,11 +145,7 @@ describe('color', () => {
       const color = new Color();
       color.l = 50;
       expect(color.l).to.deep.equal(50);
-      expect(color.toObject()).to.deep.equal({
-        r: 128, g: 128, b: 128,
-        h: 0, s: 0, l: 50,
-        a: 1
-      });
+      expect(color.toObject()).to.deep.equal(colorObject(128, 128, 128, 0, 0, 50, 1));
     });
   });
 
@@ -197,11 +154,7 @@ describe('color', () => {
       const color = new Color();
       color.a = 0.5;
       expect(color.a).to.deep.equal(0.5);
-      expect(color.toObject()).to.deep.equal({
-        r: 0, g: 0, b: 0,
-        h: 0, s: 0, l: 0,
-        a: 0.5
-      });
+      expect(color.toObject()).to.deep.equal(colorObject(0, 0, 0, 0, 0, 0, 0.5));
     });
   });
 
@@ -210,11 +163,7 @@ describe('color', () => {
       const color = new Color();
       color.rgb = 'rgb(255,127,0)';
       expect(color.rgb).to.deep.equal('rgb(255, 127, 0)');
-      expect(color.toObject()).to.deep.equal({
-        r: 255, g: 127, b: 0,
-        h: 30, s: 100, l: 50,
-        a: 1
-      });
+      expect(color.toObject()).to.deep.equal(colorObject(255, 127, 0, 30, 100, 50, 1));
     });
   });
 
@@ -223,11 +172,7 @@ describe('color', () => {
       const color = new Color();
       color.rgba = 'rgba(0,127,255,.5);';
       expect(color.rgba).to.deep.equal('rgba(0, 127, 255, 0.5)');
-      expect(color.toObject()).to.deep.equal({
-        r: 0, g: 127, b: 255,
-        h: 210, s: 100, l: 50,
-        a: 0.5
-      });
+      expect(color.toObject()).to.deep.equal(colorObject(0, 127, 255, 210, 100, 50, 0.5));
     });
   });
 
@@ -236,11 +181,7 @@ describe('color', () => {
       const color = new Color();
       color.hsl = 'hsl(120,100%,50%';
       expect(color.hsl).to.deep.equal('hsl(120, 100%, 50%)');
-      expect(color.toObject()).to.deep.equal({
-        r: 0, g: 255, b: 0,
-        h: 120, s: 100, l: 50,
-        a: 1
-      });
+      expect(color.toObject()).to.deep.equal(colorObject(0, 255, 0, 120, 100, 50, 1));
     });
   });
 
@@ -249,11 +190,7 @@ describe('color', () => {
       const color = new Color();
       color.hsla = '240,50,50,.5);';
       expect(color.hsla).to.deep.equal('hsla(240, 50%, 50%, 0.5)');
-      expect(color.toObject()).to.deep.equal({
-        r: 64, g: 64, b: 191,
-        h: 240, s: 50, l: 50,
-        a: 0.5
-      });
+      expect(color.toObject()).to.deep.equal(colorObject(64, 64, 191, 240, 50, 50, 0.5));
     });
   });
 
@@ -262,18 +199,10 @@ describe('color', () => {
       const color = new Color();
       color.hex = '#00ff7f';
       expect(color.hex).to.deep.equal('#00ff7f');
-      expect(color.toObject()).to.deep.equal({
-        r: 0, g: 255, b: 127,
-        h: 150, s: 100, l: 50,
-        a: 1
-      });
+      expect(color.toObject()).to.deep.equal(colorObject(0, 255, 127, 150, 100, 50, 1));
       color.hex = 'fa0';
       expect(color.hex).to.deep.equal('#ffaa00');
-      expect(color.toObject()).to.deep.equal({
-        r: 255, g: 170, b: 0,
-        h: 40, s: 100, l: 50,
-        a: 1
-      });
+      expect(color.toObject()).to.deep.equal(colorObject(255, 170, 0, 40, 100, 50, 1));
     });
   });
 });
