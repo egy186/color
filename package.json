@@ -1,7 +1,7 @@
 {
   "name": "color",
   "description": "JavaScript library for color conversion",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "egy186",
   "bugs": {
     "url": "https://github.com/egy186/color/issues"
