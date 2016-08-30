@@ -2,13 +2,13 @@ import Color from '../src/index';
 import chai from 'chai';
 
 const colorObject = (r, g, b, h, s, l, a) => ({
-  r,
-  g,
+  a,
   b,
+  g,
   h,
-  s,
   l,
-  a
+  r,
+  s
 });
 const expect = chai.expect;
 
