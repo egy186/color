@@ -20,7 +20,8 @@
     "rimraf": "^2.4.4"
   },
   "files": [
-    "lib"
+    "lib",
+    "src"
   ],
   "homepage": "https://github.com/egy186/color#readme",
   "keywords": [
