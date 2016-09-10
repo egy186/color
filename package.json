@@ -17,6 +17,7 @@
     "chai": "^3.4.1",
     "eslint": "^3.4.0",
     "mocha": "^3.0.2",
+    "pre-commit": "^1.1.3",
     "rimraf": "^2.4.4"
   },
   "files": [
@@ -30,6 +31,11 @@
   ],
   "license": "MIT",
   "main": "lib",
+  "pre-commit": [
+    "lint",
+    "test",
+    "build"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/egy186/color.git"
