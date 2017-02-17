@@ -19,7 +19,7 @@ const rgb2hsl = rgb255 => {
       case b:
         h = 240 + (60 * (r - g) / delta);
         break;
-      // no default
+      // No default
     }
     if (h < 0) {
       h += 360;
