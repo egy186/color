@@ -3,6 +3,11 @@
   "description": "JavaScript library for color conversion",
   "version": "0.1.2",
   "author": "egy186",
+  "ava": {
+    "require": [
+      "babel-register"
+    ]
+  },
   "bugs": {
     "url": "https://github.com/egy186/color/issues"
   },
@@ -11,6 +16,7 @@
   },
   "devDependencies": {
     "@egy186/eslint-config": "~0.23.0",
+    "ava": "^0.18.1",
     "babel-cli": "^6.14.0",
     "babel-preset-es2015": "^6.14.0",
     "babel-register": "^6.14.0",
@@ -44,6 +50,6 @@
     "build": "babel --out-dir lib src",
     "clean": "rimraf lib",
     "lint": "eslint src test",
-    "test": "mocha --compilers js:babel-register test"
+    "test": "ava"
   }
 }
