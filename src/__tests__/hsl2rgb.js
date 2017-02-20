@@ -1,6 +1,7 @@
 import hsl2rgb from '../hsl2rgb';
 
 test('convert rgb to hsl', () => {
+  expect(hsl2rgb([-30, 100, 50])).toEqual([255, 0, 128]);
   expect(hsl2rgb([0, 0, 0])).toEqual([0, 0, 0]);
   expect(hsl2rgb([0, 0, 25])).toEqual([64, 64, 64]);
   expect(hsl2rgb([0, 0, 50])).toEqual([128, 128, 128]);
@@ -31,4 +32,8 @@ test('convert rgb to hsl', () => {
   expect(hsl2rgb([300, 100, 50])).toEqual([255, 0, 255]);
   expect(hsl2rgb([300, 100, 75])).toEqual([255, 128, 255]);
   expect(hsl2rgb([330, 100, 50])).toEqual([255, 0, 128]);
+  expect(hsl2rgb([360, 0, 25])).toEqual([64, 64, 64]);
+  expect(hsl2rgb([360, 0, 50])).toEqual([128, 128, 128]);
+  expect(hsl2rgb([360, 0, 75])).toEqual([191, 191, 191]);
+  expect(hsl2rgb([390, 100, 50])).toEqual([255, 128, 0]);
 });
