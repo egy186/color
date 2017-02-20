@@ -12,11 +12,12 @@
   "devDependencies": {
     "@egy186/eslint-config": "~0.23.0",
     "babel-cli": "^6.14.0",
+    "babel-jest": "^18.0.0",
+    "babel-polyfill": "^6.23.0",
     "babel-preset-es2015": "^6.14.0",
-    "babel-register": "^6.14.0",
-    "chai": "^3.4.1",
+    "cross-env": "^3.1.4",
     "eslint": "~3.15.0",
-    "mocha": "^3.0.2",
+    "jest": "^18.1.0",
     "pre-commit": "^1.1.3",
     "rimraf": "^2.4.4"
   },
@@ -41,9 +42,9 @@
     "url": "git+https://github.com/egy186/color.git"
   },
   "scripts": {
-    "build": "babel --out-dir lib src",
+    "build": "cross-env BABEL_ENV=production babel --out-dir lib src",
     "clean": "rimraf lib",
     "lint": "eslint src test",
-    "test": "mocha --compilers js:babel-register test"
+    "test": "jest --coverage"
   }
 }

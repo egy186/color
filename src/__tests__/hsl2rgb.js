@@ -1,0 +1,34 @@
+import hsl2rgb from '../hsl2rgb';
+
+test('convert rgb to hsl', () => {
+  expect(hsl2rgb([0, 0, 0])).toEqual([0, 0, 0]);
+  expect(hsl2rgb([0, 0, 25])).toEqual([64, 64, 64]);
+  expect(hsl2rgb([0, 0, 50])).toEqual([128, 128, 128]);
+  expect(hsl2rgb([0, 0, 75])).toEqual([191, 191, 191]);
+  expect(hsl2rgb([0, 0, 100])).toEqual([255, 255, 255]);
+  expect(hsl2rgb([0, 25, 50])).toEqual([159, 96, 96]);
+  expect(hsl2rgb([0, 50, 50])).toEqual([191, 64, 64]);
+  expect(hsl2rgb([0, 75, 50])).toEqual([223, 32, 32]);
+  expect(hsl2rgb([0, 100, 50])).toEqual([255, 0, 0]);
+  expect(hsl2rgb([30, 100, 50])).toEqual([255, 128, 0]);
+  expect(hsl2rgb([60, 100, 25])).toEqual([128, 128, 0]);
+  expect(hsl2rgb([60, 100, 50])).toEqual([255, 255, 0]);
+  expect(hsl2rgb([60, 100, 75])).toEqual([255, 255, 128]);
+  expect(hsl2rgb([90, 100, 50])).toEqual([128, 255, 0]);
+  expect(hsl2rgb([120, 100, 25])).toEqual([0, 128, 0]);
+  expect(hsl2rgb([120, 100, 50])).toEqual([0, 255, 0]);
+  expect(hsl2rgb([120, 100, 75])).toEqual([128, 255, 128]);
+  expect(hsl2rgb([150, 100, 50])).toEqual([0, 255, 128]);
+  expect(hsl2rgb([180, 100, 25])).toEqual([0, 128, 128]);
+  expect(hsl2rgb([180, 100, 50])).toEqual([0, 255, 255]);
+  expect(hsl2rgb([180, 100, 75])).toEqual([128, 255, 255]);
+  expect(hsl2rgb([210, 100, 50])).toEqual([0, 128, 255]);
+  expect(hsl2rgb([240, 100, 25])).toEqual([0, 0, 128]);
+  expect(hsl2rgb([240, 100, 50])).toEqual([0, 0, 255]);
+  expect(hsl2rgb([240, 100, 75])).toEqual([128, 128, 255]);
+  expect(hsl2rgb([270, 100, 50])).toEqual([128, 0, 255]);
+  expect(hsl2rgb([300, 100, 25])).toEqual([128, 0, 128]);
+  expect(hsl2rgb([300, 100, 50])).toEqual([255, 0, 255]);
+  expect(hsl2rgb([300, 100, 75])).toEqual([255, 128, 255]);
+  expect(hsl2rgb([330, 100, 50])).toEqual([255, 0, 128]);
+});
