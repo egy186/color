@@ -11,35 +11,30 @@ const hsl2rgb = hsl => {
   const c = s * (1 - Math.abs((2 * l) - 1));
   const x = c * (1 - Math.abs(((h / 60) % 2) - 1));
   const m = l - (c / 2);
-  let [r, g, b] = [l, l, l];
-  if (s !== 0) {
-    if (h < 60) {
-      r = c + m;
-      g = x + m;
-      b = m;
-    } else if (h < 120) {
-      r = x + m;
-      g = c + m;
-      b = m;
-    } else if (h < 180) {
-      r = m;
-      g = c + m;
-      b = x + m;
-    } else if (h < 240) {
-      r = m;
-      g = x + m;
-      b = c + m;
-    } else if (h < 300) {
-      r = x + m;
-      g = m;
-      b = c + m;
-    } else {
-      r = c + m;
-      g = m;
-      b = x + m;
-    }
+  let [r, g, b] = [m, m, m];
+  if (h < 60) {
+    r += c;
+    g += x;
+  } else if (h < 120) {
+    r += x;
+    g += c;
+  } else if (h < 180) {
+    g += c;
+    b += x;
+  } else if (h < 240) {
+    g += x;
+    b += c;
+  } else if (h < 300) {
+    r += x;
+    b += c;
+  } else {
+    r += c;
+    b += x;
   }
-  return [Math.round(255 * r), Math.round(255 * g), Math.round(255 * b)];
+  if (s === 0) {
+    [r, g, b] = [l, l, l];
+  }
+  return [r, g, b].map(n => Math.round(255 * n));
 };
 
 export default hsl2rgb;
