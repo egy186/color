@@ -44,7 +44,7 @@
   "scripts": {
     "build": "cross-env BABEL_ENV=production babel --out-dir lib src",
     "clean": "rimraf lib",
-    "lint": "eslint src test",
+    "lint": "eslint .",
     "test": "jest --coverage"
   }
 }
