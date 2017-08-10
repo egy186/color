@@ -1,6 +1,14 @@
 {
-  "extends": "@egy186/eslint-config",
-  "parserOptions": {
-    "sourceType": "module"
+  "extends": [
+    "@egy186/eslint-config",
+    "@egy186/eslint-config/modules"
+  ],
+  "rules": {
+    "array-element-newline": [
+      "error",
+      {
+        "minItems": 4
+      }
+    ]
   }
 }

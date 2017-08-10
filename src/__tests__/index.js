@@ -18,8 +18,21 @@ test('props as getter/setter', () => {
   const color = new Color();
   const proto = Object.getPrototypeOf(color);
   const props = [
-    'r', 'g', 'b', 'r16', 'g16', 'b16', 'h', 's', 'l', 'a',
-    'rgb', 'rgba', 'hsl', 'hsla', 'hex'
+    'r',
+    'g',
+    'b',
+    'r16',
+    'g16',
+    'b16',
+    'h',
+    's',
+    'l',
+    'a',
+    'rgb',
+    'rgba',
+    'hsl',
+    'hsla',
+    'hex'
   ];
   props.forEach(prop => {
     const d = Object.getOwnPropertyDescriptor(proto, prop);

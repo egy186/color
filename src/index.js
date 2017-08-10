@@ -1,12 +1,14 @@
+/* eslint-disable import/no-unassigned-import */
 import 'core-js/fn/array/includes';
 import 'core-js/fn/number/is-finite';
 import 'core-js/fn/reflect/set';
 import 'core-js/fn/string/pad-start';
 import 'core-js/fn/string/repeat';
+/* eslint-enable import/no-unassigned-import */
 import hsl2rgb from './hsl2rgb';
 import rgb2hsl from './rgb2hsl';
 
-const round = Math.round;
+const { round } = Math;
 
 const PrivateProperties = () => {
   const wm = new WeakMap();
